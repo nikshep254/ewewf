@@ -1,6 +1,5 @@
 import express from "express";
 import path from "path";
-import { Readable } from "stream";
 import { GoogleGenAI } from "@google/genai";
 import type { ExtractedTweetData, TweetMedia, PhotoMedia, VideoMedia, MediaVariant, GeminiAnalysisResult } from "./src/types";
 
@@ -625,6 +624,7 @@ app.get(["/api/download", "/download"], async (req, res) => {
     const contentType = response.headers.get("content-type") || "application/octet-stream";
     res.setHeader("Content-Type", contentType);
     res.setHeader("Content-Disposition", `attachment; filename="${encodeURIComponent(requestedName)}"`);
+
     const contentLength = response.headers.get("content-length");
     if (contentLength) {
       res.setHeader("Content-Length", contentLength);
@@ -632,7 +632,8 @@ app.get(["/api/download", "/download"], async (req, res) => {
 
     // Stream body to client
     if (response.body) {
-      // @ts-ignore - response.body is ReadableStream in Node 18+ fetch
+      const { Readable } = await import("stream");
+      // @ts-ignore
       Readable.fromWeb(response.body).pipe(res);
     } else {
       const arrayBuffer = await response.arrayBuffer();
@@ -705,7 +706,8 @@ async function startServer() {
 
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
-    const { createServer: createViteServer } = await import("vite");
+    const vitePkg = "vite";
+    const { createServer: createViteServer } = await import(vitePkg);
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: "spa",

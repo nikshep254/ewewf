@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+import { Readable } from "stream";
 import { GoogleGenAI } from "@google/genai";
 import type { ExtractedTweetData, TweetMedia, PhotoMedia, VideoMedia, MediaVariant, GeminiAnalysisResult } from "./src/types";
 
@@ -624,11 +625,19 @@ app.get(["/api/download", "/download"], async (req, res) => {
     const contentType = response.headers.get("content-type") || "application/octet-stream";
     res.setHeader("Content-Type", contentType);
     res.setHeader("Content-Disposition", `attachment; filename="${encodeURIComponent(requestedName)}"`);
+    const contentLength = response.headers.get("content-length");
+    if (contentLength) {
+      res.setHeader("Content-Length", contentLength);
+    }
 
     // Stream body to client
-    const arrayBuffer = await response.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    res.send(buffer);
+    if (response.body) {
+      // @ts-ignore - response.body is ReadableStream in Node 18+ fetch
+      Readable.fromWeb(response.body).pipe(res);
+    } else {
+      const arrayBuffer = await response.arrayBuffer();
+      res.send(Buffer.from(arrayBuffer));
+    }
   } catch (err: any) {
     console.error("Download proxy error:", err);
     res.status(500).send("Error streaming media download.");

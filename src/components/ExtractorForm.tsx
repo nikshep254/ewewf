@@ -65,9 +65,9 @@ export const ExtractorForm: React.FC<ExtractorFormProps> = ({
   return (
     <div className="w-full">
       <form onSubmit={handleSubmit} className="relative w-full">
-        <div className="relative flex items-center ios-card p-1.5 focus-within:ring-2 focus-within:ring-blue-500/30 transition-all">
+        <div className="relative flex items-center intercom-input p-1.5 transition-all">
           <div className="pl-3 pr-2 text-slate-400 flex items-center">
-            <Link className="w-5 h-5 text-blue-500" />
+            <Link className="w-5 h-5 text-[#ff5600]" />
           </div>
 
           <input
@@ -75,7 +75,7 @@ export const ExtractorForm: React.FC<ExtractorFormProps> = ({
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             placeholder="Paste Twitter or X status link (e.g. https://x.com/user/status/...)"
-            className="w-full bg-transparent py-3 text-slate-800 placeholder-slate-400 text-sm sm:text-base font-normal outline-none"
+            className="w-full bg-transparent py-3 text-[#111111] placeholder-[#9c9fa5] text-sm sm:text-base font-normal outline-none"
             disabled={isLoading}
           />
 
@@ -92,7 +92,7 @@ export const ExtractorForm: React.FC<ExtractorFormProps> = ({
           <button
             type="button"
             onClick={handlePaste}
-            className="hidden sm:flex items-center gap-1 px-3 py-2 mr-1 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-semibold transition-all active:scale-95"
+            className="hidden sm:flex items-center gap-1 px-3 py-2 mr-1 rounded-md intercom-btn-secondary text-xs font-semibold transition-all active:scale-95"
             title="Paste from Clipboard"
           >
             {pasted ? <Check className="w-3.5 h-3.5 text-green-600" /> : <Clipboard className="w-3.5 h-3.5" />}
@@ -102,10 +102,10 @@ export const ExtractorForm: React.FC<ExtractorFormProps> = ({
           <button
             type="submit"
             disabled={isLoading || !url.trim()}
-            className={`px-5 py-3 rounded-xl font-semibold text-sm flex items-center gap-2 transition-all shadow-sm ${
+            className={`px-5 py-3 rounded-md font-semibold text-sm flex items-center gap-2 transition-all ${
               isLoading || !url.trim()
-                ? "bg-slate-200 text-slate-400 cursor-not-allowed"
-                : "bg-blue-600 hover:bg-blue-700 active:scale-95 text-white shadow-blue-500/20"
+                ? "bg-[#ebe7e1] text-[#9c9fa5] cursor-not-allowed"
+                : "intercom-btn-primary"
             }`}
           >
             {isLoading ? (

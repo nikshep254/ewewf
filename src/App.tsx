@@ -119,7 +119,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F2F2F7] flex flex-col font-sans text-[#1C1C1E]">
+    <div className="min-h-screen bg-[#f5f1ec] flex flex-col text-[#111111]">
       {/* Header Bar */}
       <Header
         historyCount={history.length}
@@ -140,7 +140,7 @@ export default function App() {
 
         {/* Error Alert Card */}
         {error && (
-          <div className="ios-card p-4 sm:p-5 border-rose-200 bg-rose-50/80 flex items-start gap-3 text-rose-800 animate-fade-in">
+          <div className="intercom-card p-4 sm:p-5 border-rose-200 bg-rose-50 flex items-start gap-3 text-rose-800 animate-fade-in">
             <AlertCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
             <div className="flex-1 text-xs sm:text-sm">
               <h3 className="font-bold mb-1 text-rose-900">Extraction Unsuccessful</h3>
@@ -148,7 +148,7 @@ export default function App() {
               <div className="mt-3 flex items-center gap-2">
                 <button
                   onClick={() => handleExtract(DEFAULT_SAMPLE_URL)}
-                  className="px-3 py-1.5 rounded-xl bg-rose-600 text-white text-xs font-semibold hover:bg-rose-700 transition-colors flex items-center gap-1"
+                  className="px-3 py-1.5 rounded-lg bg-rose-600 text-white text-xs font-semibold hover:bg-rose-700 transition-colors flex items-center gap-1"
                 >
                   <RefreshCw className="w-3.5 h-3.5" />
                   Try Sample Link
@@ -161,20 +161,20 @@ export default function App() {
         {/* Active Tweet Data Layout */}
         {tweetData && !isLoading && (
           <div className="space-y-6 animate-fade-in">
-            {/* iOS Segmented Navigation Tabs */}
-            <div className="p-1 bg-slate-200/80 backdrop-blur-md rounded-2xl flex items-center justify-between text-xs font-semibold text-slate-600 select-none">
+            {/* Segmented Navigation Tabs */}
+            <div className="p-1 bg-[#ffffff] border border-[#d3cec6] rounded-xl flex items-center justify-between text-xs font-semibold text-[#111111] select-none shadow-sm">
               <button
                 onClick={() => setActiveTab('overview')}
-                className={`flex-1 py-2 px-3 rounded-xl transition-all flex items-center justify-center gap-1.5 ${
+                className={`flex-1 py-2 px-3 rounded-lg transition-all flex items-center justify-center gap-1.5 ${
                   activeTab === 'overview'
-                    ? 'bg-white text-slate-900 shadow-sm font-bold'
-                    : 'hover:text-slate-900'
+                    ? 'bg-[#f5f1ec] text-[#111111] shadow-sm font-bold'
+                    : 'hover:bg-[#f5f1ec]/50'
                 }`}
               >
-                <Layers className="w-4 h-4 text-blue-600" />
+                <Layers className="w-4 h-4" />
                 <span>Overview & Media</span>
                 {tweetData.media && tweetData.media.length > 0 && (
-                  <span className="px-1.5 py-0.2 text-[10px] bg-blue-100 text-blue-700 rounded-md">
+                  <span className="px-1.5 py-0.2 text-[10px] bg-[#d3cec6]/30 text-[#111111] rounded-md">
                     {tweetData.media.length}
                   </span>
                 )}
@@ -182,40 +182,40 @@ export default function App() {
 
               <button
                 onClick={() => setActiveTab('cdn')}
-                className={`flex-1 py-2 px-3 rounded-xl transition-all flex items-center justify-center gap-1.5 ${
+                className={`flex-1 py-2 px-3 rounded-lg transition-all flex items-center justify-center gap-1.5 ${
                   activeTab === 'cdn'
-                    ? 'bg-white text-slate-900 shadow-sm font-bold'
-                    : 'hover:text-slate-900'
+                    ? 'bg-[#f5f1ec] text-[#111111] shadow-sm font-bold'
+                    : 'hover:bg-[#f5f1ec]/50'
                 }`}
               >
-                <Code2 className="w-4 h-4 text-blue-600" />
+                <Code2 className="w-4 h-4" />
                 <span>CDN Asset Links</span>
-                <span className="px-1.5 py-0.2 text-[10px] bg-slate-100 text-slate-600 rounded-md">
+                <span className="px-1.5 py-0.2 text-[10px] bg-[#d3cec6]/30 text-[#111111] rounded-md">
                   {tweetData.cdnUrlsList.length}
                 </span>
               </button>
 
               <button
                 onClick={() => setActiveTab('ai')}
-                className={`flex-1 py-2 px-3 rounded-xl transition-all flex items-center justify-center gap-1.5 ${
+                className={`flex-1 py-2 px-3 rounded-lg transition-all flex items-center justify-center gap-1.5 ${
                   activeTab === 'ai'
-                    ? 'bg-white text-slate-900 shadow-sm font-bold'
-                    : 'hover:text-slate-900'
+                    ? 'bg-[#f5f1ec] text-[#111111] shadow-sm font-bold'
+                    : 'hover:bg-[#f5f1ec]/50'
                 }`}
               >
-                <Sparkles className="w-4 h-4 text-purple-600" />
+                <Sparkles className="w-4 h-4 text-[#ff5600]" />
                 <span>AI Insights</span>
               </button>
 
               <button
                 onClick={() => setActiveTab('json')}
-                className={`flex-1 py-2 px-3 rounded-xl transition-all flex items-center justify-center gap-1.5 ${
+                className={`flex-1 py-2 px-3 rounded-lg transition-all flex items-center justify-center gap-1.5 ${
                   activeTab === 'json'
-                    ? 'bg-white text-slate-900 shadow-sm font-bold'
-                    : 'hover:text-slate-900'
+                    ? 'bg-[#f5f1ec] text-[#111111] shadow-sm font-bold'
+                    : 'hover:bg-[#f5f1ec]/50'
                 }`}
               >
-                <FileText className="w-4 h-4 text-slate-600" />
+                <FileText className="w-4 h-4" />
                 <span>Raw JSON</span>
               </button>
             </div>

@@ -13,26 +13,26 @@ export const Header: React.FC<HeaderProps> = ({
   onReset,
 }) => {
   return (
-    <header className="sticky top-0 z-30 w-full backdrop-blur-xl bg-white/80 border-b border-slate-200/80 transition-all">
+    <header className="sticky top-0 z-30 w-full bg-[#f5f1ec] border-b border-[#d3cec6] transition-all">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         {/* App Branding */}
         <div 
           onClick={onReset} 
           className="flex items-center gap-2.5 cursor-pointer group select-none"
         >
-          <div className="w-10 h-10 rounded-2xl bg-black text-white flex items-center justify-center font-bold text-lg shadow-sm group-hover:scale-105 transition-transform">
+          <div className="w-10 h-10 rounded-[12px] bg-[#111111] text-[#ffffff] flex items-center justify-center font-bold text-lg group-hover:bg-[#000000] transition-colors">
             𝕏
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <h1 className="font-semibold text-slate-900 text-base tracking-tight">
+              <h1 className="font-medium text-[#111111] text-base tracking-tight">
                 X Media & Metadata
               </h1>
-              <span className="px-1.5 py-0.5 text-[10px] font-semibold bg-blue-50 text-blue-600 rounded-md border border-blue-100">
-                CDN Pro
+              <span className="px-1.5 py-0.5 text-[10px] font-semibold bg-[#ff5600]/10 text-[#ff5600] rounded-md border border-[#ff5600]/20">
+                Fin Integration
               </span>
             </div>
-            <p className="text-xs text-slate-500 font-normal">iOS Light Extractor</p>
+            <p className="text-xs text-[#626260] font-normal">Extraction Tool</p>
           </div>
         </div>
 

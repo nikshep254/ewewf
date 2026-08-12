@@ -1,0 +1,6 @@
+{
+  "name": "X Metadata & Media Extractor",
+  "description": "iOS light-themed Twitter/X metadata and direct media CDN URL extractor with HD video/photo downloads and developer tools.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

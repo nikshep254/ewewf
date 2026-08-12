@@ -77,7 +77,20 @@ export default function App() {
         body: JSON.stringify({ url }),
       });
 
-      const json = await res.json();
+      const contentType = res.headers.get('content-type') || '';
+      let json: any = null;
+
+      if (contentType.includes('application/json')) {
+        json = await res.json();
+      } else {
+        const textErr = await res.text();
+        throw new Error(
+          `Server response error (HTTP ${res.status}): ${
+            textErr.length > 120 ? textErr.slice(0, 120) + '...' : textErr || 'Non-JSON response received'
+          }`
+        );
+      }
+
       if (!res.ok || !json.success) {
         throw new Error(json.error || 'Failed to extract metadata from this link.');
       }

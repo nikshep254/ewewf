@@ -26,7 +26,16 @@ export const AiInsights: React.FC<AiInsightsProps> = ({ tweet }) => {
         }),
       });
 
-      const data = await res.json();
+      const contentType = res.headers.get('content-type') || '';
+      let data: any = null;
+
+      if (contentType.includes('application/json')) {
+        data = await res.json();
+      } else {
+        const textErr = await res.text();
+        throw new Error(`Server returned non-JSON response (${res.status}): ${textErr.slice(0, 100)}`);
+      }
+
       if (!res.ok || !data.success) {
         throw new Error(data.error || 'Failed to generate AI insights.');
       }

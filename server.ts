@@ -1,8 +1,7 @@
 import express from "express";
 import path from "path";
-import { createServer as createViteServer } from "vite";
 import { GoogleGenAI } from "@google/genai";
-import type { ExtractedTweetData, TweetMedia, PhotoMedia, VideoMedia, MediaVariant, GeminiAnalysisResult } from "./src/types.js";
+import type { ExtractedTweetData, TweetMedia, PhotoMedia, VideoMedia, MediaVariant, GeminiAnalysisResult } from "./src/types";
 
 const app = express();
 const PORT = 3000;
@@ -18,6 +17,11 @@ app.use((req, res, next) => {
     return res.sendStatus(200);
   }
   next();
+});
+
+// Health check endpoint
+app.get(["/api/health", "/health"], (req, res) => {
+  res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
 
 /**
@@ -389,7 +393,7 @@ function normalizeSyndicationData(syn: any, rawUrl: string): ExtractedTweetData 
  * POST /api/extract
  * Extracts Twitter metadata & direct media CDN URLs
  */
-app.post("/api/extract", async (req, res) => {
+app.post(["/api/extract", "/extract"], async (req, res) => {
   try {
     const { url } = req.body;
     if (!url || typeof url !== "string") {
@@ -598,7 +602,7 @@ app.post("/api/extract", async (req, res) => {
  * GET /api/download
  * Proxy endpoint to force download media files with proper headers
  */
-app.get("/api/download", async (req, res) => {
+app.get(["/api/download", "/download"], async (req, res) => {
   try {
     const fileUrl = req.query.url as string;
     const requestedName = (req.query.filename as string) || "media_file";
@@ -635,7 +639,7 @@ app.get("/api/download", async (req, res) => {
  * POST /api/analyze-gemini
  * Server-side Gemini AI analysis of tweet content & metadata
  */
-app.post("/api/analyze-gemini", async (req, res) => {
+app.post(["/api/analyze-gemini", "/analyze-gemini"], async (req, res) => {
   try {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
@@ -692,6 +696,7 @@ async function startServer() {
 
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
+    const { createServer: createViteServer } = await import("vite");
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: "spa",
